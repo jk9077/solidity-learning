@@ -6,14 +6,19 @@ contract MyToken {
     string public symbol;
     uint8 public decimals; // 1 ETH --> 1*10^18 wei, uint8 --> 8 bit unsigned int, uint16... , uint256
 
-    uint256  public totalSupply;
+    uint256 public totalSupply;
     mapping(address => uint256) public balanceOf;
-
 
     constructor(string memory _name, string memory _symbol, uint8 _decimal) {
         name = _name;
         symbol = _symbol;
         decimals = _decimal;
+        _mint(1 * 10 ** uint256(decimals), msg.sender); //MT
+    }
+
+    function _mint(uint256 amount, address owner) internal {
+        totalSupply += amount;
+        balanceOf[owner] += amount;
     }
 
     // function totalSupply() external view returns (uint256) {
