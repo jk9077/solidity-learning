@@ -42,6 +42,14 @@ describe("My Token", () => {
         MINTING_AMOUNT * 10n ** DECIMALS,
       );
     });
+
+    it("should return or revert when minting infinity", async () => {
+      const hacker = signers[2];
+      const mintingAgainAmount = hre.ethers.parseUnits("100", DECIMALS);
+      await expect(
+        myTokenC.connect(hacker).mint(mintingAgainAmount, hacker.address),
+      ).to.be.revertedWith("You are not authorized to manage this token");
+    });
   });
 
   describe("Transfer", () => {
